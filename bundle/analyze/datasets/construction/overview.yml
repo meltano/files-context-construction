@@ -1,0 +1,56 @@
+version: datasets/v0.3
+title: "Construction: industry overview"
+questions: What does a construction organisation's data look like, and where does it come from?
+description: |
+  Industry context for this workspace, for the people and AI assistants working in it. It has no
+  query: it is a briefing to read before modelling or analysing this organisation's data.
+
+  ## Segments
+
+  Construction covers organisations that design, build, maintain and supply the built environment.
+  The segments differ in which entities and metrics matter most:
+
+  - **Main contractors:** run projects for a client and subcontract most of the work. Contracts,
+    budgets, cost codes, valuations, variations and subcontractor payments drive the data.
+  - **Specialist and trade subcontractors:** mechanical and electrical, groundworks, steel, fit-out.
+    Labour hours, plant, materials, applications for payment and retentions drive the data.
+  - **Housebuilders and developers:** land, plots, build stages, sales reservations and completions.
+    Plot-level costs and build programme drive the data.
+  - **Civil engineering and infrastructure:** roads, rail, water and energy works, often under
+    frameworks with public clients. Long programmes, earned value and compensation events drive the
+    data.
+  - **Repairs, maintenance and facilities:** reactive and planned jobs against an asset register.
+    Work orders, response times and first-time fix drive the data.
+  - **Materials and plant hire:** builders' merchants, manufacturers and hire firms. Orders, deliveries,
+    hire periods and utilisation drive the data.
+
+  ## Typical source systems
+
+  | System | Examples | What it holds |
+  |---|---|---|
+  | Construction ERP / job costing | COINS, Sage 200 or Sage Intacct Construction, Viewpoint Vista, Eque2, CMiC | Contracts, cost codes, budgets, commitments, actual costs, valuations |
+  | Project management | Procore, Autodesk Construction Cloud, Oracle Aconex, Viewpoint Field View | RFIs, submittals, drawings, snags, site diaries, inspections |
+  | Scheduling | Oracle Primavera P6, Microsoft Project, Asta Powerproject | Programme activities, baselines, progress, critical path |
+  | Estimating | CostX, Causeway Estimating, Candy | Bills of quantities, rates, tender prices |
+  | Health and safety | Procore Safety, Evotix, an in-house incident log | Incidents, near misses, inspections, permits |
+  | Time and workforce | Site access and induction systems (often biometric turnstiles), CSCS Smart Check, timesheet apps | Who was on site, hours worked, competences |
+  | Plant and telematics | Hire firm portals, machine telematics | Hire periods, hours, idle time, fuel |
+  | Accounting / ERP | Sage, Xero, Microsoft Dynamics 365, SAP | General ledger, invoices, payroll |
+  | CRM and sales (housebuilding) | Salesforce, Microsoft Dynamics 365, housebuilder sales and plot management systems | Leads, reservations, completions |
+
+  ## What makes the data different
+
+  - **The project is the unit.** Almost every cost, hour and document belongs to a project, and is
+    broken down by a cost code structure (often a work breakdown structure, WBS) that differs by
+    organisation and sometimes by project.
+  - **Money moves in stages.** Costs are budgeted, committed, incurred, valued and paid at different
+    times. Valuations, variations, retentions and final accounts make "what did it cost" a question
+    with several answers, each correct as at a date.
+  - **Forecasts matter as much as actuals.** Cost to complete and forecast final cost are monthly
+    judgements by the commercial team; keep each month's forecast, not only the latest.
+  - **Health and safety data is critical.** Incidents are reported to regulators and drive decisions
+    on site. See *Construction: handling the data*.
+
+  Related datasets: *data model*, *metrics*, *modelling it in dbt*, *handling the data*.
+
+  #construction #organisation-context

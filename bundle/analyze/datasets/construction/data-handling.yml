@@ -1,0 +1,50 @@
+version: datasets/v0.3
+title: "Construction: handling the data"
+questions: What care does construction data need in the warehouse?
+description: |
+  Construction data holds personal data about a large, mobile workforce, health and safety records,
+  and commercially sensitive contract figures. These are general practices for a warehouse holding
+  it. They are not legal or compliance advice: the organisation decides what applies to it.
+
+  ## Classify the data
+
+  | Class | Examples | Handling |
+  |---|---|---|
+  | Worker identity and right to work | Name, date of birth, National Insurance number, passport and visa details, CSCS card number | Restrict to HR and compliance roles. Do not load document images; keep the check result and expiry date |
+  | Health and incident data | Injury details, occupational health assessments, drug and alcohol test results | Special category data under UK GDPR. Restrict tightly; report incident counts, not individuals |
+  | Biometric data | Fingerprint or face templates from site access systems | **Do not load it into the warehouse.** Load only the access events it produces |
+  | Location data | Site access logs, vehicle and plant tracking | Restrict access; aggregate for productivity and utilisation reporting |
+  | Commercial data | Tender prices, rates, margins, subcontract values, claims | Restrict to commercial roles. Tender data is especially sensitive before contract award |
+  | Supplier tax data | CIS verification numbers, UTRs, bank details | Restrict to finance roles. Mask outside payment models |
+
+  ## Practices
+
+  - **Least privilege.** Separate raw, staging and mart schemas, and grant raw schemas only to the
+    pipelines and the people who maintain them. Restrict by project where joint ventures or clients
+    must not see each other's data.
+  - **Mask by default.** Hash or mask worker identifiers in shared marts, and give unmasked access by
+    role.
+  - **No production data in development** without masking.
+  - **Keep safety records whole.** Load incident and inspection records append-only and keep their
+    history; they may be needed for investigations and claims years later.
+  - **Retention.** Contract records, health and safety records and building safety information are
+    often kept for many years after completion. Agree retention periods with the organisation, and
+    keep personal data no longer than needed.
+  - **Data subject requests.** Under GDPR and UK GDPR a worker can ask for their data or for its
+    erasure, so know where each person's data lives.
+
+  ## Regulators and rules to be aware of
+
+  Which apply depends on the organisation's country and activities. Common ones:
+
+  - **UK:** UK GDPR; the Health and Safety Executive (HSE), the Construction (Design and Management)
+    Regulations 2015 (CDM) and RIDDOR incident reporting; the Building Safety Act 2022 and its
+    "golden thread" of building information for higher-risk buildings; HMRC's Construction Industry
+    Scheme (CIS); right-to-work checks.
+  - **EU:** GDPR and national health and safety regulators.
+  - **US:** OSHA recordkeeping and reporting, and state privacy and biometric laws (for example
+    Illinois' BIPA).
+  - **Public sector clients** often add contract requirements on data, security and reporting, such as
+    the UK Cyber Essentials scheme.
+
+  #construction #organisation-context

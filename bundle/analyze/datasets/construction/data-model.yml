@@ -1,0 +1,41 @@
+version: datasets/v0.3
+title: "Construction: data model"
+questions: What are the core entities of construction data, and at what grain should each be modelled?
+description: |
+  The entities most construction data reduces to, with the grain and key of each. Use it to map raw
+  source tables onto a consistent model. Names are suggestions; keep the organisation's own terms
+  where they already exist.
+
+  | Entity | Grain (one row per…) | Notes |
+  |---|---|---|
+  | `project` (job, contract) | project | Client, contract form (for example JCT or NEC), contract value, start and completion dates, status |
+  | `cost_code` | code in the cost structure | Hierarchical (WBS): trade, element or package. Map each project's codes to a standard structure |
+  | `budget_line` | project per cost code per budget version | Original budget, approved changes, current budget. Version it |
+  | `commitment` (subcontract, purchase order) | order or subcontract line | Supplier, cost code, committed value. Increases with approved variations |
+  | `cost_transaction` | posting to a project cost code | Labour, plant, materials, subcontract or overhead. Date incurred and date posted |
+  | `valuation` (application for payment) | application per period | Gross value of work done to date, retention held, amount certified, amount paid |
+  | `variation` (change order, compensation event) | change | Raised, priced, agreed or rejected, with value and time impact |
+  | `forecast` (cost value reconciliation, CVR) | project per cost code per month | Cost to date, cost to complete, forecast final cost, forecast final value |
+  | `programme_activity` | activity per programme revision | Planned and actual start and finish, percent complete, baseline dates |
+  | `timesheet` (labour entry) | worker per project per day | Hours by cost code, trade, rate |
+  | `plant_hire` | hire period | Item, supplier, on-hire and off-hire dates, rate |
+  | `site` | site or plot | For housebuilders, a `plot` with house type and build stage sits under the site |
+  | `incident` | incident or near miss | Type, severity, whether reportable, date, site, contractor involved |
+  | `defect` (snag) | defect | Location, trade responsible, raised and closed dates |
+
+  ## Relationships
+
+  - A **project** has a **budget** by **cost code**, and **commitments** and **cost transactions**
+    against those codes.
+  - A **commitment** to a subcontractor produces **valuations** from that subcontractor, and the
+    project produces valuations to the client.
+  - **Variations** change both the budget (cost) and the contract value (revenue).
+  - A monthly **forecast** brings budget, commitments, costs and valuations together per cost code.
+
+  ## Status and history
+
+  Budgets, forecasts, programmes and contract values change every month. Keep each period's version
+  (the month-end CVR, the programme baseline and each revision), because margin and progress reports
+  compare this month with last month and with the original tender.
+
+  #construction #organisation-context

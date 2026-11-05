@@ -1,0 +1,65 @@
+version: datasets/v0.3
+title: "Construction: modelling it in dbt"
+questions: How should raw construction data be modelled in dbt so that it reconciles?
+description: |
+  Conventions for building dbt models on raw construction data. They apply on top of the workspace's
+  usual dbt layout: staging, then intermediate, then marts.
+
+  ## Projects and cost codes
+
+  - **Conform cost codes.** Each project, and each source system, can use its own codes. Build a
+    mapping seed or table from source codes to a standard structure in an intermediate model, and
+    test that every cost code is mapped.
+  - **Keep the project key consistent.** The ERP, the project management tool and the scheduler each
+    have their own project IDs. Build a `dim_project` with a crosswalk of every source's ID.
+  - **Separate cost types** (labour, plant, materials, subcontract, preliminaries, overhead) as a
+    column, not as separate models, so they sum to the project total.
+
+  ## Money
+
+  - **Never use floating point for money.** Use `numeric`/`decimal`.
+  - **Gross, net and retention are different amounts.** Keep gross valuation, retention, previous
+    certified and amount due as separate columns, as the valuation document shows them. Do not
+    derive one from another unless the source does not provide it.
+  - **Cumulative to-date figures are common.** Valuations and CVRs are often reported as totals to
+    date. Derive the period movement as this period's to-date − last period's, and test it is not
+    negative unless a credit was issued.
+  - Keep VAT (including the UK construction reverse charge) and the Construction Industry Scheme
+    (CIS) deductions as separate columns from the net amount.
+
+  ## Periods and versions
+
+  - Use the organisation's **financial period calendar** (often 4-4-5 or month-end cut-offs), not
+    calendar months, for CVR and valuation reporting.
+  - **Snapshot each month's forecast and budget** (`fct_cost_value_reconciliation_monthly`) rather
+    than overwrite. Margin movement and forecast accuracy need the history.
+  - **Programmes have baselines.** Keep the baseline and each revision of programme activities, and
+    compare forecast dates with the baseline, not with the previous revision only.
+  - Costs are posted late: model cost transactions incrementally on a stable ID and reprocess a
+    look-back window around period close.
+
+  ## Tests
+
+  Add these beside the usual `unique` and `not_null` tests:
+
+  - **Cost reconciliation:** project cost by period equals the general ledger's work-in-progress
+    postings for the same project and period.
+  - **Mapping coverage:** every cost transaction maps to a standard cost code.
+  - **Valuation consistency:** amount due = gross value − retention − previously certified.
+  - **Commitment cover:** cost against a subcontract does not exceed its committed value plus
+    approved variations, or is flagged.
+  - **Accepted values** on cost types, variation statuses and incident types.
+  - **Freshness** on timesheet and cost sources before month-end close.
+
+  ## Naming
+
+  - Prefix models by layer (`stg_`, `int_`, `fct_`, `dim_`), and name facts for their grain:
+    `fct_project_costs`, `fct_valuations`, `fct_variations`, `fct_programme_activities`.
+
+  ## Sensitive columns
+
+  Tag personal columns (worker names, contact details, health and incident details) in the model
+  YAML (for example `meta: {pii: true}`) and keep them out of marts that do not need them. See
+  *Construction: handling the data*.
+
+  #construction #organisation-context

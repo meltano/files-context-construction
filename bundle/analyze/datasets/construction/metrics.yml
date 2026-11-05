@@ -1,0 +1,59 @@
+version: datasets/v0.3
+title: "Construction: key metrics"
+questions: Which metrics does a construction organisation run on, and how is each calculated?
+description: |
+  Standard definitions of the metrics construction organisations report. Confirm each one with the
+  commercial or finance team before building it: organisations differ on what counts as cost,
+  when a variation is recognised, and whether figures include retention.
+
+  ## Commercial and margin
+
+  | Metric | Definition |
+  |---|---|
+  | Contract value | Original contract sum + agreed variations. Say whether unagreed variations are included |
+  | Gross margin | (Forecast final value − forecast final cost) ÷ forecast final value |
+  | Margin movement | This month's forecast margin − last month's (or tender margin). A falling margin is the early warning |
+  | Cost to complete | Forecast final cost − cost to date |
+  | Over/under-valuation | Value recognised − value certified by the client. Large over-valuation is a cash risk |
+  | Work in progress (WIP) | Cost incurred + margin recognised − amounts invoiced |
+
+  ## Earned value (programme and cost)
+
+  | Metric | Definition |
+  |---|---|
+  | Planned value (PV) | Budgeted cost of work scheduled to date |
+  | Earned value (EV) | Budgeted cost of work actually completed to date |
+  | Actual cost (AC) | Cost actually incurred for the work completed |
+  | Cost performance index (CPI) | EV ÷ AC. Below 1 is over budget |
+  | Schedule performance index (SPI) | EV ÷ PV. Below 1 is behind programme |
+  | Estimate at completion (EAC) | Budget at completion ÷ CPI, or AC + remaining work at budget. State the method |
+
+  ## Cash
+
+  | Metric | Definition |
+  |---|---|
+  | Retention held | Retention deducted from valuations and not yet released, by project |
+  | Debtor days | Trade receivables ÷ revenue × days in the period |
+  | Payment performance | Share of supplier invoices paid within agreed terms, and average days to pay (UK large firms report this under the payment practices reporting regulations) |
+  | Cash position by project | Cash received − cash paid out, per project |
+
+  ## Delivery
+
+  | Metric | Definition |
+  |---|---|
+  | Programme slippage | Forecast completion date − contractual (or baseline) completion date, in days or weeks |
+  | Variation rate | Value of agreed variations ÷ original contract sum |
+  | Defects per unit | Defects raised at handover ÷ units (plots, rooms or floors) handed over |
+  | Labour productivity | Output (value or quantity installed) ÷ labour hours |
+  | Plant utilisation | Hours worked ÷ hours on hire |
+
+  ## Health and safety
+
+  | Metric | Definition |
+  |---|---|
+  | Accident frequency rate (AFR) | Reportable incidents × 100,000 ÷ hours worked. Organisations also use per 1,000,000 hours: say which |
+  | Lost time injury frequency rate (LTIFR) | Lost time injuries × 1,000,000 ÷ hours worked |
+  | Near-miss reporting rate | Near misses reported ÷ hours worked (or per 100,000 hours). Higher often means a better reporting culture |
+  | RIDDOR reportable incidents | Count of incidents reported to the HSE under RIDDOR (UK) |
+
+  #construction #organisation-context
